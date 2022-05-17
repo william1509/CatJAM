@@ -13,47 +13,23 @@ if TOKEN is None:
 
 bot = interactions.Client(token=TOKEN)
 
-# @bot.command(
-#     name="search",
-#     description="Displays a list of songs from youtube",
-#     scope=305408270083031040,
-#     options = [
-#         interactions.Option(
-#             name="Keywords",
-#             description="Enter some keywords to help me find your song",
-#             type=interactions.OptionType.STRING,
-#             required=True,
-#         ),
-#     ],
-
-# )
-# async def play(ctx, keywords: str):
-#     results = VideosSearch(keywords, limit=5)
-#     await ctx.send(f"you said {text}")
-button = interactions.SelectMenu (
-    style=3,
-    label="hello world!",
-    custom_id="hello",
-    options=[interactions.SelectOption(
-            label="I'm a cool option. :)",
-            value="internal_option_value",
-            description="some extra info about me! :D")
-            ]
-)
-
 @bot.command(
-    name="button_test",
-    description="This is the first command I made!",
+    name="search",
+    description="Displays a list of songs from youtube",
     scope=305408270083031040,
+    options = [
+        interactions.Option(
+            name="keywords",
+            description="Enter some keywords to help me find your song",
+            type=interactions.OptionType.STRING,
+            required=True,
+        ),
+    ],
+
 )
-async def button_test(ctx):
-    await ctx.send("testing", components=button)
-
-@bot.component("hello")
-async def button_response(ctx, text: interactions.SelectOption):
-    await ctx.send(f"You clicked the Button {text}", ephemeral=True)
-
-bot.start()
-
+async def search(ctx: interactions.CommandContext, keywords: str):
+    video_search: VideosSearch = VideosSearch(keywords, limit=5)
+    message = [f"{i} - {res['title']}" for (i, res) in enumerate(video_search.result()["result"], start=1)]
+    await ctx.send("\n".join(message))
 
 bot.start()
