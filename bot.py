@@ -12,7 +12,7 @@ youtube_dl.utils.bug_reports_message = lambda: ''
 
 load_dotenv()
 
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('DISCORD_CAT_JAM_TOKEN')
 if TOKEN is None:
     print("Token not found")
     exit(1)

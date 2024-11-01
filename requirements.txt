@@ -1,3 +1,4 @@
 youtube-search-python==1.6.5
 python-dotenv==0.20.0
 discord-py-interactions==4.2.1
+youtube-dl==2021.12.17
